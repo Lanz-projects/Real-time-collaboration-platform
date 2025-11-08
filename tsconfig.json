@@ -1,0 +1,21 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    // These options are necessary to silence the warnings/errors
+    // and should be set to true for modern TypeScript projects.
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Although this root file doesn't compile files, including 
+    // it helps the TypeScript Language Service understand the project structure.
+    "composite": true, 
+    "skipLibCheck": true,
+    "module": "esnext", // A common modern default
+    "moduleResolution": "node", // A common modern default
+    "esModuleInterop": true,
+  }
+}
