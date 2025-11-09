@@ -80,26 +80,28 @@ export function CollaborativeWhiteboard({
         {/* Header */}
         <div className="flex flex-row items-center justify-between p-4 border-b border-border flex-shrink-0">
           <div className="flex items-center gap-2">
-            <PenTool className="w-5 h-5" />
-            <h3 className="text-lg font-semibold">Collaborative Whiteboard</h3>
+            <PenTool className="w-5 h-5" aria-hidden="true" />
+            <h2 className="text-lg font-semibold">Collaborative Whiteboard</h2>
           </div>
           <div className="flex items-center gap-2">
             {isExpanded && onMinimize && (
               <button
                 onClick={onMinimize}
-                className="bg-black/70 text-white p-2 rounded-lg hover:bg-black/90 transition-colors"
+                className="bg-black/70 text-white p-2 rounded-lg hover:bg-black/90 transition-colors focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 title="Minimize"
+                aria-label="Minimize whiteboard to panel view"
               >
-                <Minimize2 className="w-5 h-5" />
+                <Minimize2 className="w-5 h-5" aria-hidden="true" />
               </button>
             )}
             {!isExpanded && onExpand && (
               <button
                 onClick={onExpand}
-                className="bg-black/70 text-white p-2 rounded-lg hover:bg-black/90 transition-colors"
+                className="bg-black/70 text-white p-2 rounded-lg hover:bg-black/90 transition-colors focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 title="Expand to focus view"
+                aria-label="Expand whiteboard to full screen"
               >
-                <Maximize2 className="w-5 h-5" />
+                <Maximize2 className="w-5 h-5" aria-hidden="true" />
               </button>
             )}
           </div>

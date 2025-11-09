@@ -64,6 +64,33 @@ The application will be available at `http://localhost:5173` (or the next availa
 
 *   **[API Keys Setup](./docs/API_KEYS_SETUP.md)** - Required configuration for Liveblocks and Agora API keys
 
+## ♿ Accessibility & Standards
+
+This application follows **W3C HTML5 standards** and **WCAG 2.1 Level AA accessibility guidelines**:
+
+*   ✅ Valid HTML5 structure with proper DOCTYPE and meta tags
+*   ✅ Semantic HTML elements (`<main>`, `<header>`, proper heading hierarchy)
+*   ✅ Keyboard navigation support for all interactive elements
+*   ✅ ARIA labels and roles for screen readers
+*   ✅ Skip navigation link for keyboard users
+*   ✅ Form autocomplete attributes
+*   ✅ Focus indicators on all interactive elements
+
+### HTML Validation
+
+Validate HTML compliance anytime:
+
+```bash
+# Validate both source and built HTML
+npm run validate:html
+
+# Validate source HTML only
+npm run validate:html:src
+
+# Validate built HTML only
+npm run validate:html:dist
+```
+
 ## 🔧 Build Notes
 
 When running `npm run build`, you may see the following warnings. These are **expected and do not indicate problems**:

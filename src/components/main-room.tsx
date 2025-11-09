@@ -53,7 +53,7 @@ function MainRoomContent({
   const [notesPanelWidth, setNotesPanelWidth] = useState(400);
   const [isParticipantsOpen, setIsParticipantsOpen] = useState(false);
 
-  const participantsBadgeRef = useRef<HTMLDivElement>(null);
+  const participantsBadgeRef = useRef<HTMLButtonElement>(null);
 
   const uid = getUid();
 
@@ -238,10 +238,11 @@ function MainRoomContent({
               setExpandedUserId(null);
               setWorkspaceLayout("split");
             }}
-            className="absolute top-4 right-4 bg-black/70 text-white p-2 rounded-lg hover:bg-black/90 transition-colors"
+            className="absolute top-4 right-4 bg-black/70 text-white p-2 rounded-lg hover:bg-black/90 transition-colors focus:ring-2 focus:ring-blue-500 focus:outline-none"
             title="Minimize"
+            aria-label="Minimize expanded video feed"
           >
-            <Minimize2 className="w-5 h-5" />
+            <Minimize2 className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
       );
@@ -343,19 +344,22 @@ function MainRoomContent({
             </p>
           </div>
           <div className="relative">
-            <div
+            <button
               ref={participantsBadgeRef}
               onClick={() => setIsParticipantsOpen(!isParticipantsOpen)}
-              className="cursor-pointer"
+              className="cursor-pointer focus:ring-2 focus:ring-blue-500 focus:outline-none rounded"
+              aria-label={`View ${participants.length} participants`}
+              aria-expanded={isParticipantsOpen}
+              aria-haspopup="true"
             >
               <Badge
                 variant="outline"
                 className="flex items-center gap-2 px-3 py-1 bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100 transition-colors"
               >
-                <Users className="w-4 h-4" />
+                <Users className="w-4 h-4" aria-hidden="true" />
                 {participants.length} participants
               </Badge>
-            </div>
+            </button>
             <ParticipantsDropdown
               participants={participants}
               isOpen={isParticipantsOpen}
@@ -382,7 +386,7 @@ function MainRoomContent({
         </div>
       </header>
 
-      <div className="flex-1 min-h-0 flex flex-col relative">
+      <main id="main-content" className="flex-1 min-h-0 flex flex-col relative">
         {renderMainContent()}
         {showNotes && (
           <div
@@ -436,7 +440,7 @@ function MainRoomContent({
             </div>
           </div>
         )}
-      </div>
+      </main>
 
       {workspaceLayout !== "focusWorkspace" &&
         workspaceLayout !== "focusScreenShare" && (

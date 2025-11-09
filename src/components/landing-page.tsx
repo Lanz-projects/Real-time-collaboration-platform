@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardHeader } from "./ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 interface LandingPageProps {
@@ -223,13 +223,13 @@ export function LandingPage({ onJoinRoom, onCreateRoom }: LandingPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <main id="main-content" className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-lg">
         <Card className="shadow-lg border-0 bg-white">
           <CardHeader className="text-center pb-8">
-            <CardTitle className="text-3xl font-semibold text-gray-900 mb-2">
+            <h1 className="text-3xl font-semibold text-gray-900 mb-2">
               Video Collaboration
-            </CardTitle>
+            </h1>
             <p className="text-gray-600 text-base">
               Connect and collaborate with your team
             </p>
@@ -263,6 +263,7 @@ export function LandingPage({ onJoinRoom, onCreateRoom }: LandingPageProps) {
                         onChange={(e) => handleJoinRoomIdChange(e.target.value)}
                         maxLength={25}
                         required
+                        autoComplete="off"
                         className="h-11 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
                       />
                       {joinRoomIdError && (
@@ -284,6 +285,7 @@ export function LandingPage({ onJoinRoom, onCreateRoom }: LandingPageProps) {
                         value={joinRoomCode}
                         onChange={(e) => handleJoinRoomCodeChange(e.target.value)}
                         required
+                        autoComplete="off"
                         className="h-11 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 text-center font-mono"
                       />
                       {joinCodeError && (
@@ -305,6 +307,7 @@ export function LandingPage({ onJoinRoom, onCreateRoom }: LandingPageProps) {
                       value={joinDisplayName}
                       onChange={(e) => setJoinDisplayName(e.target.value)}
                       required
+                      autoComplete="name"
                       className="h-11 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
                     />
                   </div>
@@ -336,6 +339,7 @@ export function LandingPage({ onJoinRoom, onCreateRoom }: LandingPageProps) {
                         onChange={(e) => handleCreateRoomIdChange(e.target.value)}
                         maxLength={25}
                         required
+                        autoComplete="off"
                         className="h-11 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
                       />
                       {createRoomIdError && (
@@ -353,6 +357,8 @@ export function LandingPage({ onJoinRoom, onCreateRoom }: LandingPageProps) {
                           onChange={(e) => handleCreateRoomCodeChange(e.target.value)}
                           maxLength={8}
                           placeholder="Code"
+                          autoComplete="off"
+                          aria-label="Room code"
                           className="h-11 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 text-center font-mono"
                         />
                         <Button
@@ -360,8 +366,9 @@ export function LandingPage({ onJoinRoom, onCreateRoom }: LandingPageProps) {
                           variant="outline"
                           size="sm"
                           onClick={regenerateCode}
-                          className="h-11 px-3 border-gray-300 hover:bg-gray-50"
+                          className="h-11 px-3 border-gray-300 hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                           title="Generate random code"
+                          aria-label="Generate random room code"
                         >
                           ↻
                         </Button>
@@ -385,6 +392,7 @@ export function LandingPage({ onJoinRoom, onCreateRoom }: LandingPageProps) {
                       value={createDisplayName}
                       onChange={(e) => setCreateDisplayName(e.target.value)}
                       required
+                      autoComplete="name"
                       className="h-11 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
                     />
                   </div>
@@ -401,6 +409,6 @@ export function LandingPage({ onJoinRoom, onCreateRoom }: LandingPageProps) {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </main>
   );
 }

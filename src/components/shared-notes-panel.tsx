@@ -220,15 +220,16 @@ export function SharedNotesPanel({
       <div className="w-full h-full flex flex-col border-l border-border bg-white dark:bg-gray-900">
         <div className="flex flex-row items-center justify-between p-4 border-b border-border flex-shrink-0">
           <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5" />
-            <h3 className="text-lg font-semibold">Shared Notes</h3>
+            <FileText className="w-5 h-5" aria-hidden="true" />
+            <h2 className="text-lg font-semibold">Shared Notes</h2>
           </div>
-          <button 
+          <button
             onClick={onClose}
-            className="text-muted-foreground hover:text-foreground" 
+            className="text-muted-foreground hover:text-foreground focus:ring-2 focus:ring-blue-500 focus:outline-none rounded p-1"
             title="Close"
+            aria-label="Close shared notes panel"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -294,7 +295,7 @@ export function SharedNotesPanel({
                 </div>
               </div>
             ) : (
-              <div className={`h-full ${isReadOnly ? 'pointer-events-none opacity-60' : ''}`}>
+              <div className={`h-full ${isReadOnly ? 'pointer-events-none opacity-60' : ''}`} role="region" aria-label="Rich text editor for shared meeting notes">
                 <ReactQuill
                   theme="snow"
                   value={notes}

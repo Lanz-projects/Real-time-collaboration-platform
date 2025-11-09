@@ -66,9 +66,9 @@ export function ParticipantsDropdown({
       className="absolute top-full left-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50 overflow-hidden"
     >
       <div className="px-4 py-3 border-b border-gray-200 bg-gray-50">
-        <h3 className="text-sm font-semibold text-gray-900">
+        <h2 className="text-sm font-semibold text-gray-900">
           Participants ({participants.length})
-        </h3>
+        </h2>
       </div>
       <div className="max-h-96 overflow-y-auto">
         {participants.map((participant) => (
@@ -104,21 +104,21 @@ export function ParticipantsDropdown({
               </div>
               <div className="flex items-center gap-2 flex-shrink-0 ml-2">
                 {participant.isMuted ? (
-                  <div className="p-1.5 rounded-full bg-red-100" title="Muted">
-                    <MicOff className="w-3.5 h-3.5 text-red-600" />
+                  <div className="p-1.5 rounded-full bg-red-100" title="Muted" aria-label={`${participant.name} is muted`}>
+                    <MicOff className="w-3.5 h-3.5 text-red-600" aria-hidden="true" />
                   </div>
                 ) : (
-                  <div className="p-1.5 rounded-full bg-green-100" title="Unmuted">
-                    <Mic className="w-3.5 h-3.5 text-green-600" />
+                  <div className="p-1.5 rounded-full bg-green-100" title="Unmuted" aria-label={`${participant.name} is unmuted`}>
+                    <Mic className="w-3.5 h-3.5 text-green-600" aria-hidden="true" />
                   </div>
                 )}
                 {participant.isCameraOff ? (
-                  <div className="p-1.5 rounded-full bg-red-100" title="Camera off">
-                    <VideoOff className="w-3.5 h-3.5 text-red-600" />
+                  <div className="p-1.5 rounded-full bg-red-100" title="Camera off" aria-label={`${participant.name} camera is off`}>
+                    <VideoOff className="w-3.5 h-3.5 text-red-600" aria-hidden="true" />
                   </div>
                 ) : (
-                  <div className="p-1.5 rounded-full bg-green-100" title="Camera on">
-                    <Video className="w-3.5 h-3.5 text-green-600" />
+                  <div className="p-1.5 rounded-full bg-green-100" title="Camera on" aria-label={`${participant.name} camera is on`}>
+                    <Video className="w-3.5 h-3.5 text-green-600" aria-hidden="true" />
                   </div>
                 )}
               </div>

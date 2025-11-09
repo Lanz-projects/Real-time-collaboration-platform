@@ -27,14 +27,20 @@ export function VideoFeed({
     .join("")
     .toUpperCase();
 
+  const Container = onClick ? 'button' : 'div';
+
   return (
-    <div
+    <Container
       className={cn(
-        "relative bg-gray-900 rounded-lg overflow-hidden aspect-video",
-        onClick && "cursor-pointer hover:ring-4 hover:ring-blue-500 transition-all",
+        "relative bg-gray-900 rounded-lg overflow-hidden aspect-video w-full",
+        onClick && "cursor-pointer hover:ring-4 hover:ring-blue-500 transition-all focus:ring-4 focus:ring-blue-500 focus:outline-none",
         isScreenSharing && "ring-2 ring-green-500"
       )}
       onClick={onClick}
+      {...(onClick && {
+        'aria-label': `${isScreenSharing ? 'Expand screen share from' : 'View video feed of'} ${userName}`,
+        type: 'button' as const
+      })}
     >
       {/* Video container - always rendered so Agora can play into it */}
       <div
@@ -47,7 +53,7 @@ export function VideoFeed({
       {isCameraOff && !isScreenSharing && (
         <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-gray-800 z-10">
           <Avatar className="w-16 h-16">
-            <AvatarFallback className="text-lg bg-blue-600 text-white">
+            <AvatarFallback className="text-lg bg-blue-600 text-white" aria-label={`${userName} avatar`}>
               {initials}
             </AvatarFallback>
           </Avatar>
@@ -69,8 +75,8 @@ export function VideoFeed({
 
       {/* Muted indicator */}
       {isMuted && (
-        <div className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-full z-20">
-          <MicOff className="w-3.5 h-3.5" />
+        <div className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-full z-20" aria-label={`${userName} is muted`}>
+          <MicOff className="w-3.5 h-3.5" aria-hidden="true" />
         </div>
       )}
 
@@ -82,6 +88,6 @@ export function VideoFeed({
           </div>
         </div>
       )}
-    </div>
+    </Container>
   );
 }

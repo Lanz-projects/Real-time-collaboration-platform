@@ -10,17 +10,15 @@ import {
 import {
   Grid3X3,
   Maximize2,
-  User,
   Users,
   EyeOff,
   Monitor,
   Layout,
   Video,
-} from "lucide-react"; //Eye , PenTool
+} from "lucide-react";
 
 export type VideoLayoutMode =
   | "gallery"
-  | "speaker"
   | "myVideoOnly"
   | "hideMyVideo";
 export type WorkspaceLayoutMode =
@@ -53,13 +51,6 @@ export function ViewOptionsMenu({
       description: "All participants in a grid",
       icon: Grid3X3,
       isDefault: true,
-    },
-    {
-      id: "speaker" as VideoLayoutMode,
-      label: "Speaker View",
-      description: "Focus on current speaker",
-      icon: User,
-      isDefault: false,
     },
     {
       id: "myVideoOnly" as VideoLayoutMode,

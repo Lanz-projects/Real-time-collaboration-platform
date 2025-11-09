@@ -55,6 +55,9 @@ export default function App() {
 
   return (
     <div className="w-full h-full">
+      <a href="#main-content" className="sr-only">
+        Skip to main content
+      </a>
       {currentState === 'landing' ? (
         <LandingPage onJoinRoom={handleJoinRoom} onCreateRoom={handleCreateRoom} />
       ) : (
