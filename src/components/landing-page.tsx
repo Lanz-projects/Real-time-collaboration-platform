@@ -19,12 +19,12 @@ interface LandingPageProps {
 }
 
 // Agora channel names exclude: . * / \ and non-printable ASCII characters
+// Also excluding: space, single quotes, double quotes, and backticks
 const ALLOWED_CHARS =
   'abcdefghijklmnopqrstuvwxyz' +
   'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
   '0123456789' +
-  '!#$%&()+,-:;<=>?@[]^_{|}~` ' +
-  '';
+  '!#$%&()+,-:;<=>?@[]^_{|}~';
 
 const generateRoomCode = (): string => {
   const length = Math.floor(Math.random() * 5) + 4;
@@ -40,6 +40,10 @@ const generateRoomCode = (): string => {
   }
 
   return code;
+};
+
+const filterAllowedChars = (input: string): string => {
+  return input.split('').filter(char => ALLOWED_CHARS.includes(char)).join('');
 };
 
 const validateRoomCode = (code: string): { isValid: boolean; error?: string } => {
@@ -125,10 +129,11 @@ export function LandingPage({ onJoinRoom, onCreateRoom }: LandingPageProps) {
   };
 
   const handleJoinRoomCodeChange = (value: string) => {
-    setJoinRoomCode(value);
+    const filtered = filterAllowedChars(value);
+    setJoinRoomCode(filtered);
 
-    if (value.length > 0) {
-      const validation = validateRoomCode(value);
+    if (filtered.length > 0) {
+      const validation = validateRoomCode(filtered);
       if (!validation.isValid) {
         setJoinCodeError(validation.error || '');
       } else {
@@ -155,10 +160,11 @@ export function LandingPage({ onJoinRoom, onCreateRoom }: LandingPageProps) {
   };
 
   const handleCreateRoomCodeChange = (value: string) => {
-    setGeneratedRoomCode(value);
+    const filtered = filterAllowedChars(value);
+    setGeneratedRoomCode(filtered);
 
-    if (value.length > 0) {
-      const validation = validateRoomCode(value);
+    if (filtered.length > 0) {
+      const validation = validateRoomCode(filtered);
       if (!validation.isValid) {
         setCreateCodeError(validation.error || '');
       } else {

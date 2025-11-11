@@ -1,9 +1,18 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import AgoraRTC from "agora-rtc-sdk-ng";
-import type { RemoteUser, AgoraConfigWithName, ScreenSharingState } from "./agoraTypes";
+import type {
+  RemoteUser,
+  AgoraConfigWithName,
+  ScreenSharingState,
+} from "./agoraTypes";
 import { playVideoTrack, closeTrack } from "./agoraHelpers";
 import { AgoraRTMManager, type UserMetadata } from "./agoraRTMHelper";
 import { logger } from "../../utils/logger";
+
+// Disable Agora debug logs in browser console
+// Log levels: 0=DEBUG, 1=INFO, 2=WARNING, 3=ERROR, 4=NONE
+const LOGLEVEL: number = 4;
+AgoraRTC.setLogLevel(LOGLEVEL); // NONE - no logs in console
 
 export function useAgoraRTC(config: AgoraConfigWithName) {
   const { appId, roomId, uid, displayName } = config;
@@ -11,18 +20,19 @@ export function useAgoraRTC(config: AgoraConfigWithName) {
   const [isMicMuted, setIsMicMuted] = useState(false);
   const [isCameraOff, setIsCameraOff] = useState(false);
   const [isScreenSharing, setIsScreenSharing] = useState(false);
-  const [remoteUsers, setRemoteUsers] = useState<Map<string | number, RemoteUser>>(
-    new Map()
-  );
-  const [userMetadata, setUserMetadata] = useState<Map<string | number, UserMetadata>>(
-    new Map()
-  );
+  const [remoteUsers, setRemoteUsers] = useState<
+    Map<string | number, RemoteUser>
+  >(new Map());
+  const [userMetadata, setUserMetadata] = useState<
+    Map<string | number, UserMetadata>
+  >(new Map());
   const [isConnected, setIsConnected] = useState(false);
-  const [screenSharingState, setScreenSharingState] = useState<ScreenSharingState>({
-    isActive: false,
-    sharerUid: null,
-  });
-  const [noteContent, setNoteContent] = useState('');
+  const [screenSharingState, setScreenSharingState] =
+    useState<ScreenSharingState>({
+      isActive: false,
+      sharerUid: null,
+    });
+  const [noteContent, setNoteContent] = useState("");
   const [noteLock, setNoteLock] = useState<{
     userId: string | null;
     displayName: string | null;
@@ -33,7 +43,9 @@ export function useAgoraRTC(config: AgoraConfigWithName) {
   const localVideoTrackRef = useRef<any>(null);
   const localAudioTrackRef = useRef<any>(null);
   const localScreenTrackRef = useRef<any>(null);
-  const previousVideoStateRef = useRef<Map<string | number, boolean>>(new Map());
+  const previousVideoStateRef = useRef<Map<string | number, boolean>>(
+    new Map()
+  );
   const isInitializingRef = useRef(false);
   const hasInitializedRef = useRef(false);
 
@@ -55,9 +67,11 @@ export function useAgoraRTC(config: AgoraConfigWithName) {
           };
 
           if (mediaType === "video") {
-            const hadVideoBefore = previousVideoStateRef.current.get(user.uid) || false;
+            const hadVideoBefore =
+              previousVideoStateRef.current.get(user.uid) || false;
             const wasScreenSharing = existingUser.isScreenSharing || false;
-            const hadVideoButUnpublished = hadVideoBefore && !existingUser.hasVideo;
+            const hadVideoButUnpublished =
+              hadVideoBefore && !existingUser.hasVideo;
 
             existingUser.videoTrack = user.videoTrack;
             existingUser.hasVideo = true;
@@ -107,15 +121,15 @@ export function useAgoraRTC(config: AgoraConfigWithName) {
         if (existingUser) {
           if (mediaType === "video") {
             const wasScreenSharing = existingUser.isScreenSharing;
-            
+
             existingUser.videoTrack = undefined;
             existingUser.hasVideo = false;
-            
+
             if (wasScreenSharing) {
               existingUser.isScreenSharing = false;
               previousVideoStateRef.current.delete(user.uid);
               logger.log(`User ${user.uid} stopped screen sharing`);
-              
+
               setScreenSharingState({
                 isActive: false,
                 sharerUid: null,
@@ -160,14 +174,14 @@ export function useAgoraRTC(config: AgoraConfigWithName) {
     setRemoteUsers((prev) => {
       const newMap = new Map(prev);
       const existingUser = newMap.get(user.uid);
-      
+
       if (existingUser?.isScreenSharing) {
         setScreenSharingState({
           isActive: false,
           sharerUid: null,
         });
       }
-      
+
       newMap.delete(user.uid);
       previousVideoStateRef.current.delete(user.uid);
       return newMap;
@@ -221,7 +235,7 @@ export function useAgoraRTC(config: AgoraConfigWithName) {
   useEffect(() => {
     // Prevent duplicate initialization in React Strict Mode
     if (isInitializingRef.current || hasInitializedRef.current) {
-      logger.log('Skipping duplicate initialization');
+      logger.log("Skipping duplicate initialization");
       return;
     }
 
@@ -229,7 +243,7 @@ export function useAgoraRTC(config: AgoraConfigWithName) {
 
     const initAgora = async () => {
       try {
-        logger.log('🚀 Starting Agora initialization...');
+        logger.log("🚀 Starting Agora initialization...");
 
         const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
         clientRef.current = client;
@@ -239,7 +253,7 @@ export function useAgoraRTC(config: AgoraConfigWithName) {
         client.on("user-unpublished", handleUserUnpublished);
         client.on("user-left", handleUserLeft);
 
-        logger.log('Joining RTC channel...');
+        logger.log("Joining RTC channel...");
         await client.join(appId, roomId, null, uid);
         setIsConnected(true);
         hasInitializedRef.current = true;
@@ -249,7 +263,10 @@ export function useAgoraRTC(config: AgoraConfigWithName) {
         // Add any users already in the channel to our local state
         const existingUsers = client.remoteUsers;
         if (existingUsers && existingUsers.length > 0) {
-          logger.log("Found existing users in channel:", existingUsers.map((u: any) => u.uid));
+          logger.log(
+            "Found existing users in channel:",
+            existingUsers.map((u: any) => u.uid)
+          );
           setRemoteUsers((prev) => {
             const newMap = new Map(prev);
             existingUsers.forEach((user: any) => {
@@ -270,7 +287,7 @@ export function useAgoraRTC(config: AgoraConfigWithName) {
 
         await joinStream();
 
-        logger.log('Initializing RTM...');
+        logger.log("Initializing RTM...");
         const rtmManager = new AgoraRTMManager({
           appId,
           userId: uid.toString(),
@@ -287,7 +304,7 @@ export function useAgoraRTC(config: AgoraConfigWithName) {
             logger.log("Note lock changed:", lock);
             setNoteLock({
               userId: lock.userId,
-              displayName: lock.displayName
+              displayName: lock.displayName,
             });
           },
           (content, userId) => {
@@ -314,7 +331,7 @@ export function useAgoraRTC(config: AgoraConfigWithName) {
     initAgora();
 
     return () => {
-      logger.log('Cleanup effect triggered');
+      logger.log("Cleanup effect triggered");
       if (hasInitializedRef.current) {
         leaveChannel();
         hasInitializedRef.current = false;
@@ -387,7 +404,9 @@ export function useAgoraRTC(config: AgoraConfigWithName) {
         "auto"
       );
 
-      const videoTrack = Array.isArray(screenTrack) ? screenTrack[0] : screenTrack;
+      const videoTrack = Array.isArray(screenTrack)
+        ? screenTrack[0]
+        : screenTrack;
       localScreenTrackRef.current = videoTrack;
 
       // Replace camera video with screen share
@@ -455,10 +474,13 @@ export function useAgoraRTC(config: AgoraConfigWithName) {
     }
   }, [isScreenSharing, isCameraOff, uid]);
 
-  const getUserDisplayName = useCallback((userId: string | number): string => {
-    const metadata = userMetadata.get(userId);
-    return metadata?.displayName || `User ${userId}`;
-  }, [userMetadata]);
+  const getUserDisplayName = useCallback(
+    (userId: string | number): string => {
+      const metadata = userMetadata.get(userId);
+      return metadata?.displayName || `User ${userId}`;
+    },
+    [userMetadata]
+  );
 
   const acquireNoteLock = useCallback(async () => {
     if (rtmManagerRef.current) {
