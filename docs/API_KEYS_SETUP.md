@@ -1,6 +1,8 @@
 # API Keys and Environment Setup Guide
 
-To run this application, you need to provide API keys for the real-time services it relies on: **Liveblocks** and **Agora**. This guide will walk you through obtaining and setting up these keys.
+This guide covers setting up API keys for **development and testing**. To run this application, you need to provide API keys for the real-time services it relies on: **Liveblocks** and **Agora**.
+
+**⚠️ Important:** The free tier keys described in this guide are suitable for development and testing only. For production deployment, you must upgrade to paid service tiers. See the **[Production Deployment Guide](./PRODUCTION_DEPLOYMENT.md)** for complete details.
 
 ## 1. Create a `.env` File
 
@@ -17,6 +19,8 @@ VITE_AGORA_APP_ID="..."
 
 Liveblocks powers the real-time collaboration features like cursor presence and data synchronization for the whiteboard.
 
+**For Development:**
+
 1.  **Sign Up:** Go to [liveblocks.io](https://liveblocks.io) and create a free account.
 2.  **Find Your Public Key:**
     *   Navigate to your project dashboard.
@@ -24,9 +28,18 @@ Liveblocks powers the real-time collaboration features like cursor presence and 
     *   Copy this key.
 3.  **Update `.env`:** Paste the key into your `.env` file as the value for `VITE_LIVEBLOCKS_PUBLIC_KEY`.
 
+**Free Tier Limitations:**
+- Limited monthly active users
+- Limited concurrent connections
+- Suitable for development and testing only
+
+**For Production:** You will need to upgrade to a paid tier. See the [Production Deployment Guide](./PRODUCTION_DEPLOYMENT.md#liveblocks-production-services) for details.
+
 ## 3. Get Agora App ID
 
 Agora provides the real-time video and audio streaming capabilities.
+
+**For Development:**
 
 1.  **Sign Up:** Go to [agora.io](https://www.agora.io/en/) and create a developer account.
 2.  **Create a Project:**
@@ -41,11 +54,19 @@ Agora provides the real-time video and audio streaming capabilities.
 4.  **Configure the App**
     * On the "Overview" page, click the "configure" button of your project
     * Scroll down to the "ALL FEATURES" area and configure these settings:
-        * Signaling: (Set up a datacenter: Ex. NA) 
+        * Signaling: (Set up a datacenter: Ex. NA)
             * Make sure this is active
             * Enable: Stream Channel Configuration
         * For any other feature you may want, you can activate it, and implement it within the app.
-6.  **Update `.env`:** Paste the App ID into your `.env` file as the value for `VITE_AGORA_APP_ID`.
+5.  **Update `.env`:** Paste the App ID into your `.env` file as the value for `VITE_AGORA_APP_ID`.
+
+**Free Tier Limitations:**
+- Limited monthly usage minutes
+- Limited concurrent users
+- App ID authentication only (not secure for production)
+- Suitable for development and testing only
+
+**For Production:** You must upgrade to a paid tier and implement token-based authentication. See the [Production Deployment Guide](./PRODUCTION_DEPLOYMENT.md#agora-production-services) for details.
 
 ## 4. Restart Your Development Server
 

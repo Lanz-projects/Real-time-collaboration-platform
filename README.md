@@ -60,9 +60,20 @@ npm run dev
 
 The application will be available at `http://localhost:5173` (or the next available port).
 
+## ⚠️ Production Use
+
+**Important:** This setup is for **development and testing only**. If you plan to deploy this application to production for personal or commercial use, you must:
+
+1. **Obtain a tldraw license** (hobby license for non-commercial, commercial license for business use)
+2. **Upgrade to Agora's paid tier** for production video/audio services
+3. **Upgrade to Liveblocks' paid tier** for production collaboration features
+
+See the **[Production Deployment Guide](./docs/PRODUCTION_DEPLOYMENT.md)** for complete details on licensing requirements, costs, and setup instructions.
+
 ## 📚 Documentation
 
 *   **[API Keys Setup](./docs/API_KEYS_SETUP.md)** - Required configuration for Liveblocks and Agora API keys
+*   **[Production Deployment Guide](./docs/PRODUCTION_DEPLOYMENT.md)** - Licensing and service requirements for production use
 
 ## ♿ Accessibility & Standards
 
