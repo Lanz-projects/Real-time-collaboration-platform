@@ -380,7 +380,7 @@ Before deploying to production, ensure you have:
 
 ### tldraw Resources
 
-- [tldraw License Information](https://tldraw.dev/docs/license)
+- [tldraw License Information](https://tldraw.dev/community/license)
 - [tldraw Pricing](https://tldraw.dev/pricing)
 - [Request a License](https://tldraw.dev/community/license)
 - [tldraw Documentation](https://tldraw.dev/docs)
@@ -389,7 +389,6 @@ Before deploying to production, ensure you have:
 
 - [Agora Pricing](https://www.agora.io/en/pricing/)
 - [Agora Console](https://console.agora.io)
-- [Token Authentication Guide](https://docs.agora.io/en/video-calling/get-started/authentication-workflow)
 - [Agora Documentation](https://docs.agora.io/en/)
 
 ### Liveblocks Resources
