@@ -132,7 +132,7 @@ export function SharedNotesPanel({
       const timer = setTimeout(() => {
         logger.log('Auto-releasing lock due to inactivity');
         handleStopEditing();
-      }, 10000);
+      }, 5000); // 5 seconds of inactivity
 
       return () => clearTimeout(timer);
     }
